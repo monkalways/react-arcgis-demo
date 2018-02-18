@@ -17,7 +17,7 @@ const renderInput = (props) => (
     </Form.Field>
 );
 
-const CameraFilter = ({initialValues, handleSubmit, filterCameraLayer}) => {
+const CameraFilter = ({initialValues, pristine, reset, submitting, handleSubmit, filterCameraLayer}) => {
 
     const onSubmit = (values) => {
         console.log(values);
@@ -27,7 +27,7 @@ const CameraFilter = ({initialValues, handleSubmit, filterCameraLayer}) => {
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Field name='cameraNumber' component={renderInput} label="Camera Number" placeholder='Camera8001' />
-            <Button type='submit' primary>Submit</Button>
+            <Button type='submit' disabled={pristine  || submitting} primary>Submit</Button>
         </Form>
     );
 }
@@ -48,10 +48,11 @@ const mapStateToProps = (state) => ({
     }
 });
 
-const CameraFilterRedux = connect(mapStateToProps, {filterCameraLayer})(CameraFilter);
-
-export default reduxForm({
-    validate,
+const CameraFilterReduxForm = reduxForm({
+    // validate,
     form: 'camera-filter',
-    enableReinitialize: true
-})(CameraFilterRedux);
+    enableReinitialize: true,
+    // keepDirtyOnReinitialize:true,// 这个值表示重新初始化表单后，不替换已更改的值，可以用clear来测试
+})(CameraFilter);
+
+export default connect(mapStateToProps, {filterCameraLayer})(CameraFilterReduxForm);
