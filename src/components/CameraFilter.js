@@ -1,27 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Form, Input, Message } from 'semantic-ui-react';
+import { Button, Form } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
 
 import { filterCameraLayer } from '../actions/mapActions';
-
-const renderInput = (props) => (
-    <Form.Field>
-        <label>{props.label}</label>
-        <Input {...props.input} placeholder={props.placeholder} />
-        <Message
-            negative
-            hidden={!(props.meta.touched && props.meta.error)}
-            content={props.meta.error}
-        />
-    </Form.Field>
-);
+import renderInput from './utils/renderInput';
 
 const CameraFilter = ({initialValues, pristine, reset, submitting, handleSubmit, filterCameraLayer}) => {
 
     const onSubmit = (values) => {
         console.log(values);
-        filterCameraLayer(values.cameraNumber);
+        filterCameraLayer({
+            cameraNumber: values.cameraNumber
+        });
     };
 
     return (
@@ -32,20 +23,18 @@ const CameraFilter = ({initialValues, pristine, reset, submitting, handleSubmit,
     );
 }
 
-const validate = (values) => {
-    const errors = {};
+// const validate = (values) => {
+//     const errors = {};
 
-    if(!values.cameraNumber) {
-        errors.cameraNumber = 'Enter a camera number';
-    }
+//     if(!values.cameraNumber) {
+//         errors.cameraNumber = 'Enter a camera number';
+//     }
 
-    return errors;
-};
+//     return errors;
+// };
 
 const mapStateToProps = (state) => ({
-    initialValues: {
-        cameraNumber: state.map.cameraNumber
-    }
+    initialValues: state.map.filter
 });
 
 const CameraFilterReduxForm = reduxForm({

@@ -1,6 +1,6 @@
 import { esriPromise } from 'react-arcgis';
 
-import { MAP_LOAD, LAYER_VISIBILITY_CHANGE, LEGEND_TOGGLE, CAMERA_LAYER_FILTER } from '../actions/mapActions';
+import { MAP_LOAD, LAYER_VISIBILITY_CHANGE, LEGEND_TOGGLE, CAMERA_LAYER_FILTER, CAMERA_LAYER_QUERY } from '../actions/mapActions';
 
 const CAMERA_LAYER_TITLE = 'Toronto Cameras';
 
@@ -8,7 +8,8 @@ const defaultMapReducerState = {
     map: null,
     view: null,
     layers: null,
-    cameraNumber: null
+    filter: null,
+    query: null
 };
 
 const setupCameraLayerPopupTemplate = (map) => {
@@ -57,22 +58,52 @@ const toggleLegend = (map, view) => {
     }).catch((err) => console.error(err));
 }
 
-const filterCameraLayer = (map, cameraNumber) => {
+const filterCameraLayer = (map, view, filter) => {
     const cameraLayer = map.layers.items.find(item => item.title === CAMERA_LAYER_TITLE);
-    if(!cameraNumber) {
+    if(!filter.cameraNumber) {
         cameraLayer.definitionExpression = null;
     } else {
-        cameraLayer.definitionExpression = `CameraNumber = '${cameraNumber}'`;
+        cameraLayer.definitionExpression = `CameraNumber = '${filter.cameraNumber}'`;
     }
     return cameraLayer.definitionExpression;
+}
+
+const queryCameraLayer = (map, view, query) => {
+    console.log(view);
+    console.log('query camera layer', query);
+
+    const cameraLayer = map.layers.items.find(item => item.title === CAMERA_LAYER_TITLE);
+    const queryCameras = cameraLayer.createQuery();
+    queryCameras.where = `CameraNumber = '${query.cameraNumber}'`;
+    cameraLayer.queryFeatures(queryCameras).then(result => {
+        const feature = result.features[0];
+
+        console.log(feature.geometry);
+
+        view.goTo({
+            target: feature.geometry,
+            zoom: 15
+        }, {
+            duration: 1000,
+            easing: 'in-out-expo'
+        }).then(() => {
+            view.popup.open({
+                features: [feature],
+                location: feature.geometry
+            });
+        });
+    })
 }
 
 const mapReducer = (state = defaultMapReducerState, action) => {
     switch (action.type) {
 
         case MAP_LOAD:
-            console.log(action.map.layers.items);
+            
             setupCameraLayerPopupTemplate(action.map);
+
+            // automatically closes the popup when the View camera or Viewpoint changes
+            action.view.popup.autoCloseEnabled = true;
 
             return {
                 map: action.map,
@@ -94,11 +125,19 @@ const mapReducer = (state = defaultMapReducerState, action) => {
             return state;
 
         case CAMERA_LAYER_FILTER:
-            filterCameraLayer(state.map, action.cameraNumber);
+            filterCameraLayer(state.map, action.filter);
             return {
                 ...state,
-                cameraNumber: action.cameraNumber
+                filter: action.filter
             };
+
+        case CAMERA_LAYER_QUERY:
+            queryCameraLayer(state.map, state.view, action.query);
+            return {
+                ...state,
+                query: action.query
+            };
+
         default:
             return state;
     }
