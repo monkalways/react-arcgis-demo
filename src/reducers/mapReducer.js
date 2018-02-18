@@ -59,7 +59,11 @@ const toggleLegend = (map, view) => {
 
 const filterCameraLayer = (map, cameraNumber) => {
     const cameraLayer = map.layers.items.find(item => item.title === CAMERA_LAYER_TITLE);
-    cameraLayer.definitionExpression = `CameraNumber = '${cameraNumber}'`;
+    if(!cameraNumber) {
+        cameraLayer.definitionExpression = null;
+    } else {
+        cameraLayer.definitionExpression = `CameraNumber = '${cameraNumber}'`;
+    }
     return cameraLayer.definitionExpression;
 }
 
