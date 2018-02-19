@@ -4,10 +4,8 @@ export const LEGEND_TOGGLE = 'LEGEND_TOGGLE';
 export const CAMERA_LAYER_FILTER = 'CAMERA_LAYER_FILTER';
 export const CAMERA_LAYER_QUERY = 'CAMERA_LAYER_QUERY';
 
-export const loadMap = (map, view) => ({
-    type: MAP_LOAD,
-    map,
-    view
+export const loadMap = () => ({
+    type: MAP_LOAD
 });
 
 export const changeLayerVisibility = (layerId, visible) => ({

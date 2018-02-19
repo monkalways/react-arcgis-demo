@@ -8,6 +8,11 @@ let map = null;
 let view = null;
 let legend = null;
 
+export const initializeArcGisMap = (mapValue, viewValue) => {
+    map = mapValue;
+    view = viewValue;
+}
+
 const defaultMapReducerState = {
     layers: null,
     filter: null,
@@ -102,9 +107,6 @@ const mapReducer = (state = defaultMapReducerState, action) => {
 
         case MAP_LOAD:
 
-            map = action.map;
-            view = action.view;
-            
             setupCameraLayerPopupTemplate();
 
             // automatically closes the popup when the View camera or Viewpoint changes
