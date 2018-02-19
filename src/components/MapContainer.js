@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { WebMap } from 'react-arcgis';
 
 import { loadMap } from '../actions/mapActions';
-import { initializeArcGisMap } from '../reducers/mapReducer';
+import { initializeArcGisMap } from '../services/arcgisService';
 
 class MapContainer extends Component {
     
     handleMapLoad = (map, view) => {
         
-        // The following line passes map and view to the reducer directly, bypassing the actions.
+        // The following line passes map and view to the service directly, bypassing action and reducer.
         // this is done to avoid passing map and view as action parameters. The ArcGIS "WebMap" class
         // does not support toJSON, which can cause redux development tool to crash.
         initializeArcGisMap(map, view);
