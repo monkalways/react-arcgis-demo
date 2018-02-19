@@ -7,7 +7,6 @@ import {
 } from '../actions/mapActions';
 
 import {
-    setupCameraLayerPopupTemplate,
     buildLayers,
     setLayerVisibility,
     toggleLegend,

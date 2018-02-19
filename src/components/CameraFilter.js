@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Form } from 'semantic-ui-react';
-import { Field, reduxForm, initialize } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 
 import { filterCameraLayer } from '../actions/mapActions';
 import renderInput from './utils/renderInput';

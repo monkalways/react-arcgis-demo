@@ -27,7 +27,7 @@ const setupCameraLayerPopupTemplate = () => {
 export const buildLayers = () => {
   const layers = [];
   map.layers.items.map(item => {
-      layers.push({
+      return layers.push({
           id: item.id,
           title: item.title,
           visible: item.visible
