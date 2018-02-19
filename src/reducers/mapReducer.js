@@ -4,15 +4,18 @@ import { MAP_LOAD, LAYER_VISIBILITY_CHANGE, LEGEND_TOGGLE, CAMERA_LAYER_FILTER, 
 
 const CAMERA_LAYER_TITLE = 'Toronto Cameras';
 
+let map = null;
+let view = null;
+let legend = null;
+
 const defaultMapReducerState = {
-    map: null,
-    view: null,
     layers: null,
     filter: null,
-    query: null
+    query: null,
+    legendVisible: false
 };
 
-const setupCameraLayerPopupTemplate = (map) => {
+const setupCameraLayerPopupTemplate = () => {
     const cameraLayer = map.layers.items.find(item => item.title === CAMERA_LAYER_TITLE);
     cameraLayer.popupTemplate = {
         title: '#{CameraNumber}',
@@ -20,16 +23,20 @@ const setupCameraLayerPopupTemplate = (map) => {
     };
 };
 
-const buildLayers = (map) => {
-    const layers = [
-        ...map.layers.items
-    ];
+const buildLayers = () => {
+    const layers = [];
+    map.layers.items.map(item => {
+        layers.push({
+            id: item.id,
+            title: item.title,
+            visible: item.visible
+        });
+    })
     return layers;
 };
 
-let legend;
-let legendVisible = false;
-const toggleLegend = (map, view) => {
+const toggleLegend = (legendVisible) => {
+    
     esriPromise(['esri/widgets/Legend']).then(([ Legend ]) => {
         if(!legend) {
             var layerInfos = [];
@@ -46,7 +53,7 @@ const toggleLegend = (map, view) => {
             });
         }
 
-        if(!legendVisible) {
+        if(legendVisible) {
             // Add widget to the bottom right corner of the view
             view.ui.add(legend, "bottom-right");
             legendVisible = true;
@@ -54,11 +61,12 @@ const toggleLegend = (map, view) => {
             view.ui.remove(legend);
             legendVisible = false;
         }
-        
+
     }).catch((err) => console.error(err));
+    
 }
 
-const filterCameraLayer = (map, view, filter) => {
+const filterCameraLayer = (filter) => {
     const cameraLayer = map.layers.items.find(item => item.title === CAMERA_LAYER_TITLE);
     if(!filter.cameraNumber) {
         cameraLayer.definitionExpression = null;
@@ -68,18 +76,12 @@ const filterCameraLayer = (map, view, filter) => {
     return cameraLayer.definitionExpression;
 }
 
-const queryCameraLayer = (map, view, query) => {
-    console.log(view);
-    console.log('query camera layer', query);
-
+const queryCameraLayer = (query) => {
     const cameraLayer = map.layers.items.find(item => item.title === CAMERA_LAYER_TITLE);
     const queryCameras = cameraLayer.createQuery();
     queryCameras.where = `CameraNumber = '${query.cameraNumber}'`;
     cameraLayer.queryFeatures(queryCameras).then(result => {
         const feature = result.features[0];
-
-        console.log(feature.geometry);
-
         view.goTo({
             target: feature.geometry,
             zoom: 15
@@ -99,40 +101,45 @@ const mapReducer = (state = defaultMapReducerState, action) => {
     switch (action.type) {
 
         case MAP_LOAD:
+
+            map = action.map;
+            view = action.view;
             
-            setupCameraLayerPopupTemplate(action.map);
+            setupCameraLayerPopupTemplate();
 
             // automatically closes the popup when the View camera or Viewpoint changes
-            action.view.popup.autoCloseEnabled = true;
+            view.popup.autoCloseEnabled = true;
 
             return {
-                map: action.map,
-                view: action.view,
-                layers: buildLayers(action.map)
+                ...state,
+                layers: buildLayers()
             };
 
         case LAYER_VISIBILITY_CHANGE:
-            // const newMap = { ...state.map };
-            const layer = state.map.allLayers.items.find(item => item.id === action.layerId);
+            const layer = map.layers.items.find(item => item.id === action.layerId);
             layer.visible = action.visible;
             return {
                 ...state,
-                layers: buildLayers(state.map)
+                layers: buildLayers()
             };
 
         case LEGEND_TOGGLE:
-            toggleLegend(state.map, state.view);
-            return state;
+            const legendVisible = !state.legendVisible;
+            toggleLegend(legendVisible);
+            return {
+                ...state,
+                legendVisible
+            };
 
         case CAMERA_LAYER_FILTER:
-            filterCameraLayer(state.map, action.filter);
+            filterCameraLayer(action.filter);
             return {
                 ...state,
                 filter: action.filter
             };
 
         case CAMERA_LAYER_QUERY:
-            queryCameraLayer(state.map, state.view, action.query);
+            queryCameraLayer(action.query);
             return {
                 ...state,
                 query: action.query
