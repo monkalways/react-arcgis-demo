@@ -8,13 +8,14 @@ import MapContainer from './components/MapContainer';
 
 import './App.css';
 
-const mainContainerStyle = {
-  marginTop: 47
+const pusherStyle = {
+  height: '100%',
+  width: '100%'
 };
 
 const mapContainerStyle = {
-  height: '94vh',
-  width: '100vw'
+  height: '100%',
+  width: '100%'
 };
 
 class App extends Component {
@@ -22,15 +23,15 @@ class App extends Component {
     return (
       <div className="App">
         <AppHeader />
-        <div style={mainContainerStyle}>
+        <div className="Content">
           <Sidebar.Pushable>
             <Sidebar animation='slide along' direction='right' width='wide' visible={this.props.sidebarVisible} icon='labeled'>
               <AppSidebar />
             </Sidebar>
-            <Sidebar.Pusher>
-                <div style={mapContainerStyle}>
-                  <MapContainer />
-                </div>
+            <Sidebar.Pusher style={pusherStyle}>
+                
+                <MapContainer style={mapContainerStyle}/>
+                
             </Sidebar.Pusher>
           </Sidebar.Pushable>
         </div>
