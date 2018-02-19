@@ -14,7 +14,7 @@ export const initializeArcGisMap = (mapValue, viewValue) => {
     view.popup.autoCloseEnabled = true;
 
     setupCameraLayerPopupTemplate();
-}
+};
 
 const setupCameraLayerPopupTemplate = () => {
   const cameraLayer = map.layers.items.find(item => item.title === CAMERA_LAYER_TITLE);
@@ -42,7 +42,6 @@ export const setLayerVisibility = (layerId, visible) => {
 };
 
 export const toggleLegend = (legendVisible) => {
-  
   esriPromise(['esri/widgets/Legend']).then(([ Legend ]) => {
       if(!legend) {
           var layerInfos = [];
@@ -69,8 +68,7 @@ export const toggleLegend = (legendVisible) => {
       }
 
   }).catch((err) => console.error(err));
-  
-}
+};
 
 export const filterCameraLayer = (filter) => {
   const cameraLayer = map.layers.items.find(item => item.title === CAMERA_LAYER_TITLE);
@@ -80,7 +78,7 @@ export const filterCameraLayer = (filter) => {
       cameraLayer.definitionExpression = `CameraNumber = '${filter.cameraNumber}'`;
   }
   return cameraLayer.definitionExpression;
-}
+};
 
 export const queryCameraLayer = (query) => {
   const cameraLayer = map.layers.items.find(item => item.title === CAMERA_LAYER_TITLE);
@@ -100,5 +98,5 @@ export const queryCameraLayer = (query) => {
               location: feature.geometry
           });
       });
-  })
-}
+  });
+};
