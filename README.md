@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
-You can [**fork it**](https://help.github.com/articles/fork-a-repo/) by using the Fork button in the top-right section of the page.
+You can [**fork it**](https://help.github.com/articles/fork-a-repo/) by using the Fork button in the top-right section of the page. More details on branching [here](https://help.github.com/articles/viewing-branches-in-your-repository/). 
 
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
