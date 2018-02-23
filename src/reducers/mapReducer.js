@@ -3,7 +3,9 @@ import {
     LAYER_VISIBILITY_CHANGE, 
     LEGEND_TOGGLE, 
     CAMERA_LAYER_FILTER, 
-    CAMERA_LAYER_QUERY 
+    CAMERA_LAYER_QUERY,
+    CAMERA_LAYER_QUERY_COMPLETE,
+    SEARCH_RESULTS_HIDE
 } from '../actions/mapActions';
 
 import {
@@ -18,6 +20,8 @@ const defaultMapReducerState = {
     layers: null,
     filter: null,
     query: null,
+    searchResults: [],
+    showSearchResults: false,
     legendVisible: false
 };
 
@@ -58,6 +62,19 @@ const mapReducer = (state = defaultMapReducerState, action) => {
                 ...state,
                 query: action.query
             };
+
+        case CAMERA_LAYER_QUERY_COMPLETE:
+            return {
+                ...state,
+                searchResults: action.searchResults,
+                showSearchResults: true
+            };
+
+        case SEARCH_RESULTS_HIDE:
+            return {
+                ...state,
+                showSearchResults: false
+            }
 
         default:
             return state;
