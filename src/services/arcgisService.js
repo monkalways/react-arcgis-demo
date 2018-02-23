@@ -1,5 +1,8 @@
 import { esriPromise } from 'react-arcgis';
 
+import store from '../store';
+import { completeQueryCameraLayer } from '../actions/mapActions';
+
 const CAMERA_LAYER_TITLE = 'Toronto Cameras';
 
 let map = null;
@@ -14,6 +17,7 @@ export const initializeArcGisMap = (mapValue, viewValue) => {
     view.popup.autoCloseEnabled = true;
 
     setupCameraLayerPopupTemplate();
+    // setupZoomEventHandler();
 };
 
 const setupCameraLayerPopupTemplate = () => {
@@ -23,6 +27,15 @@ const setupCameraLayerPopupTemplate = () => {
       content: '<div class="ui segment basic"><div class="ui card"><div class="image"><img src="{NorthReferenceStaticImage}"></div><div class="content">North View</div></div><button type="button" class="ui button" onclick="window.cameraLayerButtonClick()">Click Me</button></div>'
   };
 };
+
+// const setupZoomEventHandler = () => {
+//     esriPromise(['esri/core/watchUtils']).then(([ watchUtils ]) => {
+//         watchUtils.watch(view, "scale", function() {
+//             console.log('Map scale changed: ', view.scale);
+//         });
+  
+//     }).catch((err) => console.error(err));
+// } 
 
 export const buildLayers = () => {
   const layers = [];
@@ -85,6 +98,7 @@ export const queryCameraLayer = (query) => {
   const queryCameras = cameraLayer.createQuery();
   queryCameras.where = `CameraNumber = '${query.cameraNumber}'`;
   cameraLayer.queryFeatures(queryCameras).then(result => {
+      // zoom to first feature returned
       const feature = result.features[0];
       view.goTo({
           target: feature.geometry,
@@ -98,5 +112,9 @@ export const queryCameraLayer = (query) => {
               location: feature.geometry
           });
       });
+
+      // trigger completeQueryCameraLayer
+      console.log(result.features);
+      store.dispatch(completeQueryCameraLayer(result.features));
   });
 };
