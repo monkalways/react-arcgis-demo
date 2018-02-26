@@ -1,15 +1,22 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Item } from 'semantic-ui-react';
 
-const CameraSearchResultItem = ({CameraNumber: cameraNumber, NorthReferenceStaticImage: northReferenceStaticImage}) => {
+import { zoomToFeature } from '../actions/mapActions';
+
+const CameraSearchResultItem = ({feature, zoomToFeature}) => {
+    const handleItemClick = () => {
+        zoomToFeature(feature);
+    };
+
     return (
         <Item>
-            <Item.Image size='small' src={northReferenceStaticImage} />
+            <Item.Image size='small' src={feature.attributes.NorthReferenceStaticImage} />
             <Item.Content verticalAlign='middle'>
-                <Item.Header as='a'>#{cameraNumber}</Item.Header>
+                <Item.Description as='a' onClick={handleItemClick}>#{feature.attributes.CameraNumber}</Item.Description>
             </Item.Content>
         </Item>
     );
-}
+};
 
-export default CameraSearchResultItem;
+export default connect(null, {zoomToFeature})(CameraSearchResultItem);

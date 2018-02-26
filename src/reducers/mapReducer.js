@@ -5,7 +5,8 @@ import {
     CAMERA_LAYER_FILTER, 
     MAP_LAYER_QUERY,
     MAP_LAYER_QUERY_COMPLETE,
-    SEARCH_RESULTS_HIDE
+    SEARCH_RESULTS_HIDE,
+    FEATURE_ZOOM
 } from '../actions/mapActions';
 
 import {
@@ -13,7 +14,8 @@ import {
     setLayerVisibility,
     toggleLegend,
     filterCameraLayer,
-    queryMapLayer
+    queryMapLayer,
+    zoomToFeature
 } from '../services/arcgisService';
 
 const defaultMapReducerState = {
@@ -74,7 +76,13 @@ const mapReducer = (state = defaultMapReducerState, action) => {
             return {
                 ...state,
                 showSearchResults: false
-            }
+            };
+
+        case FEATURE_ZOOM:
+            zoomToFeature(action.feature, action.zoom);
+            return {
+                ...state
+            };
 
         default:
             return state;

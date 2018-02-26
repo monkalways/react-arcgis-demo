@@ -128,3 +128,18 @@ export const queryMapLayer = (queryForm) => {
     store.dispatch(completeQueryMapLayer(result.features));
   });
 };
+
+export const zoomToFeature = (feature, zoom) => {
+    view.goTo({
+        target: feature.geometry,
+        zoom
+    }, {
+        duration: 500,
+        easing: 'in-out-expo'
+    }).then(() => {
+        view.popup.open({
+            features: [feature],
+            location: feature.geometry
+        });
+    });
+}

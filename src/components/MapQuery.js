@@ -29,17 +29,21 @@ const MapQuery = ({initialValues, pristine, reset, submitting, handleSubmit, que
   const renderSearchResultItem = () => {
     switch (initialValues.layerId) {
       case CAMERA_LAYER_ID:
-        return searchResults.map(result => (
-          <CameraSearchResultItem key={result.uid} {...result.attributes}></CameraSearchResultItem>
+        return searchResults.map(feature => (
+          <CameraSearchResultItem key={feature.uid} feature={feature}></CameraSearchResultItem>
         ));
       case SCHOOL_LAYER_ID:
-        return searchResults.map(result => (
-          <SchoolSearchResultItem key={result.uid} {...result.attributes}></SchoolSearchResultItem>
+        return searchResults.map(feature => (
+          <SchoolSearchResultItem key={feature.uid} feature={feature}></SchoolSearchResultItem>
         ));
       case NEIGHBORHOOD_LAYER_ID:
-        return searchResults.map(result => (
-          <NeighborhoodSearchResultItem key={result.uid} {...result.attributes}></NeighborhoodSearchResultItem>
+        return searchResults.map(feature => (
+          <NeighborhoodSearchResultItem key={feature.uid} feature={feature}></NeighborhoodSearchResultItem>
         ));
+      default:
+        return (
+          <div>Unknown layer item type</div>
+        );
     }
   };
 
