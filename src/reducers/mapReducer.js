@@ -3,8 +3,8 @@ import {
     LAYER_VISIBILITY_CHANGE, 
     LEGEND_TOGGLE, 
     CAMERA_LAYER_FILTER, 
-    CAMERA_LAYER_QUERY,
-    CAMERA_LAYER_QUERY_COMPLETE,
+    MAP_LAYER_QUERY,
+    MAP_LAYER_QUERY_COMPLETE,
     SEARCH_RESULTS_HIDE
 } from '../actions/mapActions';
 
@@ -13,13 +13,13 @@ import {
     setLayerVisibility,
     toggleLegend,
     filterCameraLayer,
-    queryCameraLayer
+    queryMapLayer
 } from '../services/arcgisService';
 
 const defaultMapReducerState = {
     layers: null,
     filter: null,
-    query: null,
+    queryForm: null,
     searchResults: [],
     showSearchResults: false,
     legendVisible: false
@@ -56,14 +56,14 @@ const mapReducer = (state = defaultMapReducerState, action) => {
                 filter: action.filter
             };
 
-        case CAMERA_LAYER_QUERY:
-            queryCameraLayer(action.query);
+        case MAP_LAYER_QUERY:
+            queryMapLayer(action.queryForm);
             return {
                 ...state,
-                query: action.query
+                queryForm: action.queryForm
             };
 
-        case CAMERA_LAYER_QUERY_COMPLETE:
+        case MAP_LAYER_QUERY_COMPLETE:
             return {
                 ...state,
                 searchResults: action.searchResults,

@@ -1,9 +1,11 @@
 import { esriPromise } from 'react-arcgis';
 
 import store from '../store';
-import { completeQueryCameraLayer } from '../actions/mapActions';
+import { completeQueryMapLayer } from '../actions/mapActions';
 
-const CAMERA_LAYER_TITLE = 'Toronto Cameras';
+export const CAMERA_LAYER_ID = 'Toronto_Cameras_6835';
+export const SCHOOL_LAYER_ID = 'Toronto_Schools_5846';
+export const NEIGHBORHOOD_LAYER_ID = 'Toronto_Neighbourhoods_2016_Crime_1374';
 
 let map = null;
 let view = null;
@@ -21,7 +23,7 @@ export const initializeArcGisMap = (mapValue, viewValue) => {
 };
 
 const setupCameraLayerPopupTemplate = () => {
-  const cameraLayer = map.layers.items.find(item => item.title === CAMERA_LAYER_TITLE);
+  const cameraLayer = map.layers.items.find(item => item.id === CAMERA_LAYER_ID);
   cameraLayer.popupTemplate = {
       title: '#{CameraNumber}',
       content: '<div class="ui segment basic"><div class="ui card"><div class="image"><img src="{NorthReferenceStaticImage}"></div><div class="content">North View</div></div><button type="button" class="ui button" onclick="window.cameraLayerButtonClick()">Click Me</button></div>'
@@ -39,8 +41,8 @@ const setupCameraLayerPopupTemplate = () => {
 
 export const buildLayers = () => {
   const layers = [];
-  map.layers.items.map(item => {
-      return layers.push({
+  map.layers.items.forEach(item => {
+      layers.push({
           id: item.id,
           title: item.title,
           visible: item.visible
@@ -84,7 +86,7 @@ export const toggleLegend = (legendVisible) => {
 };
 
 export const filterCameraLayer = (filter) => {
-  const cameraLayer = map.layers.items.find(item => item.title === CAMERA_LAYER_TITLE);
+  const cameraLayer = map.layers.items.find(item => item.id === CAMERA_LAYER_ID);
   if(!filter.cameraNumber) {
       cameraLayer.definitionExpression = null;
   } else {
@@ -93,28 +95,36 @@ export const filterCameraLayer = (filter) => {
   return cameraLayer.definitionExpression;
 };
 
-export const queryCameraLayer = (query) => {
-  const cameraLayer = map.layers.items.find(item => item.title === CAMERA_LAYER_TITLE);
-  const queryCameras = cameraLayer.createQuery();
-  queryCameras.where = `CameraNumber = '${query.cameraNumber}'`;
-  cameraLayer.queryFeatures(queryCameras).then(result => {
-      // zoom to first feature returned
-      const feature = result.features[0];
-      view.goTo({
-          target: feature.geometry,
-          zoom: 15
-      }, {
-          duration: 1000,
-          easing: 'in-out-expo'
-      }).then(() => {
-          view.popup.open({
-              features: [feature],
-              location: feature.geometry
-          });
-      });
+export const queryMapLayer = (queryForm) => {
+  const layer = map.layers.items.find(item => item.id === queryForm.layerId);
+  const queryObj = layer.createQuery();
+  queryObj.where = queryForm.query;
+  layer.queryFeatures(queryObj).then(result => {
 
-      // trigger completeQueryCameraLayer
-      console.log(result.features);
-      store.dispatch(completeQueryCameraLayer(result.features));
+    if(result.features.length > 0) {
+        // zoom to first feature returned
+        const feature = result.features[0];
+        let zoom = 15;
+        if (queryForm.layerId === NEIGHBORHOOD_LAYER_ID) {
+           zoom = 13;
+        }
+
+        view.goTo({
+            target: feature.geometry,
+            zoom
+        }, {
+            duration: 500,
+            easing: 'in-out-expo'
+        }).then(() => {
+            view.popup.open({
+                features: [feature],
+                location: feature.geometry
+            });
+        });
+    }
+
+    // trigger completeQueryCameraLayer
+    console.log(result.features);
+    store.dispatch(completeQueryMapLayer(result.features));
   });
 };

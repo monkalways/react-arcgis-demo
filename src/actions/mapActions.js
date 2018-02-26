@@ -2,8 +2,8 @@ export const MAP_LOAD = 'MAP_LOAD';
 export const LAYER_VISIBILITY_CHANGE = 'LAYER_VISIBILITY_CHANGE';
 export const LEGEND_TOGGLE = 'LEGEND_TOGGLE';
 export const CAMERA_LAYER_FILTER = 'CAMERA_LAYER_FILTER';
-export const CAMERA_LAYER_QUERY = 'CAMERA_LAYER_QUERY';
-export const CAMERA_LAYER_QUERY_COMPLETE = 'CAMERA_LAYER_QUERY_COMPLETE';
+export const MAP_LAYER_QUERY = 'MAP_LAYER_QUERY';
+export const MAP_LAYER_QUERY_COMPLETE = 'MAP_LAYER_QUERY_COMPLETE';
 export const SEARCH_RESULTS_HIDE = 'SEARCH_RESULTS_HIDE';
 
 export const loadMap = () => ({
@@ -25,13 +25,13 @@ export const filterCameraLayer = (filter) => ({
     filter
 });
 
-export const queryCameraLayer = (query) => ({
-    type: CAMERA_LAYER_QUERY,
-    query
+export const queryMapLayer = (queryForm) => ({
+    type: MAP_LAYER_QUERY,
+    queryForm
 });
 
-export const completeQueryCameraLayer = (searchResults) => ({
-    type: CAMERA_LAYER_QUERY_COMPLETE,
+export const completeQueryMapLayer = (searchResults) => ({
+    type: MAP_LAYER_QUERY_COMPLETE,
     searchResults
 });
 
