@@ -85,12 +85,12 @@ export const toggleLegend = (legendVisible) => {
   }).catch((err) => console.error(err));
 };
 
-export const filterMapLayer = (filterForm) => {
-  const layer = map.layers.items.find(item => item.id === filterForm.layerId);
-  if(!filterForm.criteria) {
+export const filterMapLayer = (filter) => {
+  const layer = map.layers.items.find(item => item.id === filter.layerId);
+  if(!filter.active || !filter.criteria) {
       layer.definitionExpression = null;
   } else {
-      layer.definitionExpression = filterForm.criteria;
+      layer.definitionExpression = filter.criteria;
   }
   return layer.definitionExpression;
 };

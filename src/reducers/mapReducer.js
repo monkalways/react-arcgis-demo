@@ -1,8 +1,12 @@
-import { 
-    MAP_LOAD, 
-    LAYER_VISIBILITY_CHANGE, 
-    LEGEND_TOGGLE, 
-    MAP_LAYER_FILTER, 
+import uuid from 'uuid';
+
+import {
+    MAP_LOAD,
+    LAYER_VISIBILITY_CHANGE,
+    LEGEND_TOGGLE,
+    MAP_LAYER_FILTER,
+    FILTER_ADD,
+    FILTER_TOGGLE,
     MAP_LAYER_QUERY,
     MAP_LAYER_QUERY_COMPLETE,
     SEARCH_RESULTS_HIDE,
@@ -20,6 +24,7 @@ import {
 
 const defaultMapReducerState = {
     layers: null,
+    filters: {},
     filterForm: null,
     queryForm: null,
     searchResults: [],
@@ -56,6 +61,32 @@ const mapReducer = (state = defaultMapReducerState, action) => {
             return {
                 ...state,
                 filterForm: action.filterForm
+            };
+
+        case FILTER_ADD:
+            const newFilter = {
+                ...action.filter,
+                id: uuid(),
+                active: false
+            };
+            return {
+                ...state,
+                filters: {
+                    ...state.filters,
+                    [newFilter.id]: newFilter
+                }
+            };
+        
+        case FILTER_TOGGLE:
+            const filter = state.filters[action.filterId];
+            filter.active = action.active;
+            filterMapLayer(filter);
+            return {
+                ...state,
+                filters: {
+                    ...state.filters,
+                    [filter.id]: filter
+                }
             };
 
         case MAP_LAYER_QUERY:

@@ -1,57 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Form } from 'semantic-ui-react';
-import { Field, reduxForm } from 'redux-form';
+import { Button, Icon, Segment } from 'semantic-ui-react';
 
-import { filterMapLayer } from '../actions/mapActions';
-import renderInput from './utils/renderInput';
-import renderSelect from './utils/renderSelect';
-import { visibleLayersSelector } from '../selectors/mapSelector';
+import { showFilterModal } from '../actions/appActions';
+import FilterList from './FilterList';
 
-const MapFilter = ({initialValues, pristine, reset, submitting, handleSubmit, filterMapLayer, layers}) => {
+const filterListStyle = {
+    marginTop: 10
+};
 
-    const onSubmit = (values) => {
-        filterMapLayer({
-            layerId: values.layerId,
-            criteria: values.criteria
-        });
-    };
+const MapFilter = ({showFilterModal}) => {
 
     return (
-        <Form onSubmit={handleSubmit(onSubmit)}>
-            <Field name="layerId" component={renderSelect} label="Layer" placeholder="Select a layer" options={layers} />
-            <Field name='criteria' component={renderInput} label="Criteria" placeholder="CameraNumber LIKE 'Camera800?'" />
-            <Button type='submit' disabled={pristine  || submitting} primary>Filter</Button>
-        </Form>
+        <div>
+            <Button type="button" icon onClick={() => showFilterModal()}><Icon name='filter' />New Filter</Button>    
+            <div style={filterListStyle}>
+                <FilterList />
+            </div>
+        </div>
     );
 }
 
-const validate = (values) => {
-    const errors = {};
-
-    if(!values.layerId) {
-        errors.layerId = 'Please select a layer.';
-    }
-
-    if(!values.criteria) {
-        errors.criteria = 'Please enter a criteria.';
-    }
-
-    return errors;
-};
-
-const mapStateToProps = (state) => ({
-    initialValues: state.map.filterForm,
-    layers: visibleLayersSelector(state).map(layer => ({
-        value: layer.id,
-        text: layer.title
-      }))
-});
-
-const MapFilterReduxForm = reduxForm({
-    validate,
-    form: 'filter-form',
-    enableReinitialize: true,
-})(MapFilter);
-
-export default connect(mapStateToProps, {filterMapLayer})(MapFilterReduxForm);
+export default connect(null, {showFilterModal})(MapFilter);

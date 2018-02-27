@@ -5,6 +5,7 @@ import { Sidebar } from 'semantic-ui-react';
 import AppHeader from './components/AppHeader';
 import AppSidebar from './components/AppSidebar';
 import MapContainer from './components/MapContainer';
+import FilterModal from './components/FilterModal';
 
 import './App.css';
 
@@ -25,7 +26,7 @@ class App extends Component {
         <AppHeader />
         <div className="Content">
           <Sidebar.Pushable>
-            <Sidebar animation='slide along' direction='right' width='wide' visible={this.props.sidebarVisible} icon='labeled'>
+            <Sidebar animation="slide along" direction="right" width="very wide" visible={this.props.sidebarVisible} icon="labeled">
               <AppSidebar />
             </Sidebar>
             <Sidebar.Pusher style={pusherStyle}>
@@ -35,6 +36,7 @@ class App extends Component {
             </Sidebar.Pusher>
           </Sidebar.Pushable>
         </div>
+        <FilterModal />
       </div>
     );
   }
