@@ -24,7 +24,11 @@ const AppHeader = ({toggleSidebar, toggleLegend}) => {
                     trigger={<Button icon="list layout" color="violet" onClick={(event, data) => toggleLegend()}></Button>}
                     content="Toggle legend"
                 />
-                <Button icon="content" color="violet" onClick={(event, data) => toggleSidebar()}></Button>
+                <Popup
+                    size="tiny"
+                    trigger={<Button icon="sidebar" color="violet" onClick={(event, data) => toggleSidebar()}></Button>}
+                    content="Toggle sidebar"
+                />
             </Menu.Item>
             
         </Menu>
