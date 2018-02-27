@@ -30,15 +30,19 @@ const MapFilter = ({initialValues, pristine, reset, submitting, handleSubmit, fi
     );
 }
 
-// const validate = (values) => {
-//     const errors = {};
+const validate = (values) => {
+    const errors = {};
 
-//     if(!values.cameraNumber) {
-//         errors.cameraNumber = 'Enter a camera number';
-//     }
+    if(!values.layerId) {
+        errors.layerId = 'Please select a layer.';
+    }
 
-//     return errors;
-// };
+    if(!values.criteria) {
+        errors.criteria = 'Please enter a criteria.';
+    }
+
+    return errors;
+};
 
 const mapStateToProps = (state) => ({
     initialValues: state.map.filter,
@@ -49,7 +53,7 @@ const mapStateToProps = (state) => ({
 });
 
 const MapFilterReduxForm = reduxForm({
-    // validate,
+    validate,
     form: 'filter-form',
     enableReinitialize: true,
 })(MapFilter);
