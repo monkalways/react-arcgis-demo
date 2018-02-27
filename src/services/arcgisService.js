@@ -85,14 +85,14 @@ export const toggleLegend = (legendVisible) => {
   }).catch((err) => console.error(err));
 };
 
-export const filterCameraLayer = (filter) => {
-  const cameraLayer = map.layers.items.find(item => item.id === CAMERA_LAYER_ID);
-  if(!filter.cameraNumber) {
-      cameraLayer.definitionExpression = null;
+export const filterMapLayer = (filterForm) => {
+  const layer = map.layers.items.find(item => item.id === filterForm.layerId);
+  if(!filterForm.criteria) {
+      layer.definitionExpression = null;
   } else {
-      cameraLayer.definitionExpression = `CameraNumber = '${filter.cameraNumber}'`;
+      layer.definitionExpression = filterForm.criteria;
   }
-  return cameraLayer.definitionExpression;
+  return layer.definitionExpression;
 };
 
 export const queryMapLayer = (queryForm) => {

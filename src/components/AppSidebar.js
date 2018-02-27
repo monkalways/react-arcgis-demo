@@ -2,7 +2,7 @@ import React from 'react';
 import { Segment, Tab } from 'semantic-ui-react';
 
 import LayerSelector from './LayerSelector';
-import CameraFilter from './CameraFilter';
+import MapFilter from './MapFilter';
 import MapQuery from './MapQuery';
 
 const panes = [
@@ -12,7 +12,7 @@ const panes = [
     },
     { 
         menuItem: { key: 'cameraFilter', icon: 'filter', content: 'Filter'},
-        render: () => <Tab.Pane><CameraFilter /></Tab.Pane> 
+        render: () => <Tab.Pane><MapFilter /></Tab.Pane> 
     },
     { 
         menuItem: { key: 'cameraFilter', icon: 'search', content: 'Query'},

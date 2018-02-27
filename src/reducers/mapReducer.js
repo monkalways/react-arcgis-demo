@@ -2,7 +2,7 @@ import {
     MAP_LOAD, 
     LAYER_VISIBILITY_CHANGE, 
     LEGEND_TOGGLE, 
-    CAMERA_LAYER_FILTER, 
+    MAP_LAYER_FILTER, 
     MAP_LAYER_QUERY,
     MAP_LAYER_QUERY_COMPLETE,
     SEARCH_RESULTS_HIDE,
@@ -13,7 +13,7 @@ import {
     buildLayers,
     setLayerVisibility,
     toggleLegend,
-    filterCameraLayer,
+    filterMapLayer,
     queryMapLayer,
     zoomToFeature
 } from '../services/arcgisService';
@@ -51,8 +51,8 @@ const mapReducer = (state = defaultMapReducerState, action) => {
                 legendVisible
             };
 
-        case CAMERA_LAYER_FILTER:
-            filterCameraLayer(action.filter);
+        case MAP_LAYER_FILTER:
+            filterMapLayer(action.filterForm);
             return {
                 ...state,
                 filter: action.filter
