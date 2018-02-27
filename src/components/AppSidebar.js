@@ -11,11 +11,11 @@ const panes = [
         render: () => <Tab.Pane><LayerSelector /></Tab.Pane> 
     },
     { 
-        menuItem: { key: 'cameraFilter', icon: 'filter', content: 'Filter'},
+        menuItem: { key: 'filter', icon: 'filter', content: 'Filter'},
         render: () => <Tab.Pane><MapFilter /></Tab.Pane> 
     },
     { 
-        menuItem: { key: 'cameraFilter', icon: 'search', content: 'Query'},
+        menuItem: { key: 'search', icon: 'search', content: 'Query'},
         render: () => <Tab.Pane><MapQuery /></Tab.Pane> 
     }
 ]
