@@ -6,7 +6,7 @@ import { zoomToFeature } from '../actions/mapActions';
 
 const NeighborhoodSearchResultItem = ({feature, zoomToFeature}) => {
     const handleItemClick = () => {
-        zoomToFeature(feature, 10);
+        zoomToFeature(feature, 13);
     };
 
     return (
