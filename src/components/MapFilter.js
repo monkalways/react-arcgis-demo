@@ -17,10 +17,6 @@ const MapFilter = ({initialValues, pristine, reset, submitting, handleSubmit, fi
         });
     };
 
-    const isClearFilterButtonDisabled = () => {
-        return !(initialValues && initialValues.cameraNumber);
-    };
-
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Field name="layerId" component={renderSelect} label="Layer" placeholder="Select a layer" options={layers} />
@@ -45,7 +41,7 @@ const validate = (values) => {
 };
 
 const mapStateToProps = (state) => ({
-    initialValues: state.map.filter,
+    initialValues: state.map.filterForm,
     layers: visibleLayersSelector(state).map(layer => ({
         value: layer.id,
         text: layer.title

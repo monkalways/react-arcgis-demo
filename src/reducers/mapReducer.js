@@ -20,7 +20,7 @@ import {
 
 const defaultMapReducerState = {
     layers: null,
-    filter: null,
+    filterForm: null,
     queryForm: null,
     searchResults: [],
     showSearchResults: false,
@@ -55,7 +55,7 @@ const mapReducer = (state = defaultMapReducerState, action) => {
             filterMapLayer(action.filterForm);
             return {
                 ...state,
-                filter: action.filter
+                filterForm: action.filterForm
             };
 
         case MAP_LAYER_QUERY:
