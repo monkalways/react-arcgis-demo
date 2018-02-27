@@ -6,9 +6,18 @@ import CameraFilter from './CameraFilter';
 import MapQuery from './MapQuery';
 
 const panes = [
-    { menuItem: 'Layers List', render: () => <Tab.Pane><LayerSelector /></Tab.Pane> },
-    { menuItem: 'Camera Filter', render: () => <Tab.Pane><CameraFilter /></Tab.Pane> },
-    { menuItem: 'Map Query', render: () => <Tab.Pane><MapQuery /></Tab.Pane> },
+    { 
+        menuItem: { key: 'layersList', icon: 'bars', content: 'Layers'}, 
+        render: () => <Tab.Pane><LayerSelector /></Tab.Pane> 
+    },
+    { 
+        menuItem: { key: 'cameraFilter', icon: 'filter', content: 'Filter'},
+        render: () => <Tab.Pane><CameraFilter /></Tab.Pane> 
+    },
+    { 
+        menuItem: { key: 'cameraFilter', icon: 'search', content: 'Query'},
+        render: () => <Tab.Pane><MapQuery /></Tab.Pane> 
+    }
 ]
 
 const AppSidebar = () => {
