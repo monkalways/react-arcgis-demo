@@ -18,7 +18,7 @@ const MapQuery = ({initialValues, pristine, reset, submitting, handleSubmit, que
   const onSubmit = (values) => {
     queryMapLayer({
       layerId: values.layerId,
-      query: values.query
+      criteria: values.criteria
     });
   };
 
@@ -52,7 +52,7 @@ const MapQuery = ({initialValues, pristine, reset, submitting, handleSubmit, que
       { !showSearchResults ? (
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Field name="layerId" component={renderSelect} label="Layer" placeholder="Select a layer" options={layers} />
-          <Field name='query' component={renderInput} label="Query" placeholder="CameraNumber LIKE 'Camera800?'" />
+          <Field name='criteria' component={renderInput} label="Query" placeholder="CameraNumber LIKE 'Camera800%'" />
           <Button type='submit' disabled={pristine  || submitting} primary>Submit</Button>
         </Form>
       ) : (
@@ -99,7 +99,7 @@ const validate = (formProps) => {
 
 const MapQueryReduxForm = reduxForm({
   validate,
-  form: 'map-query',
+  form: 'query-form',
   enableReinitialize: true,
 })(MapQuery);
 

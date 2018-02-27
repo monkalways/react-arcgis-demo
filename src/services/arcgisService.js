@@ -98,7 +98,7 @@ export const filterMapLayer = (filterForm) => {
 export const queryMapLayer = (queryForm) => {
   const layer = map.layers.items.find(item => item.id === queryForm.layerId);
   const queryObj = layer.createQuery();
-  queryObj.where = queryForm.query;
+  queryObj.where = queryForm.criteria;
   layer.queryFeatures(queryObj).then(result => {
 
     if(result.features.length > 0) {
