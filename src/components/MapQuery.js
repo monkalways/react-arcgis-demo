@@ -86,12 +86,12 @@ const mapStateToProps = (state) => ({
 const validate = (formProps) => {
   const errors = {};
 
-  if (!formProps.layer) {
-    errors.layer = 'Please select a layer';
+  if (!formProps.layerId) {
+    errors.layerId = 'Please select a layer.';
   }
 
-  if (!formProps.cameraNumber) {
-    errors.cameraNumber = 'Please enter a camera number';
+  if (!formProps.criteria) {
+    errors.criteria = 'Please enter a criteria.';
   }
 
   return errors;
