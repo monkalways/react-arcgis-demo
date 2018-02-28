@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Icon, Segment } from 'semantic-ui-react';
+import { Button, Icon } from 'semantic-ui-react';
 
 import { showFilterModal } from '../actions/appActions';
 import FilterList from './FilterList';
