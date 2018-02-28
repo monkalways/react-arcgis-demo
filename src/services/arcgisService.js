@@ -14,7 +14,7 @@ let legend = null;
 export const initializeArcGisMap = (mapValue, viewValue) => {
     map = mapValue;
     view = viewValue;
-    
+    console.log(map);
     // automatically closes the popup when the View camera or Viewpoint changes
     view.popup.autoCloseEnabled = true;
 
@@ -26,7 +26,18 @@ const setupCameraLayerPopupTemplate = () => {
   const cameraLayer = map.layers.items.find(item => item.id === CAMERA_LAYER_ID);
   cameraLayer.popupTemplate = {
       title: '#{CameraNumber}',
-      content: '<div class="ui segment basic"><div class="ui card"><div class="image"><img src="{NorthReferenceStaticImage}"></div><div class="content">North View</div></div><button type="button" class="ui button" onclick="window.cameraLayerButtonClick()">Click Me</button></div>'
+      content: `
+        <div class="ui segment basic">
+            <div class="ui card">
+                <div class="image"><img src="{NorthReferenceStaticImage}"></div>
+                <div class="content">North View</div>
+            </div>
+            <div class="ui card">
+                <div class="image"><img src="{SouthReferenceStaticImage}"></div>
+                <div class="content">South View</div>
+            </div>
+            <button type="button" class="ui button" onclick="window.cameraLayerButtonClick()">Click Me</button>
+        </div>`
   };
 };
 
