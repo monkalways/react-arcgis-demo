@@ -6,8 +6,13 @@ import AppHeader from './components/AppHeader';
 import AppSidebar from './components/AppSidebar';
 import MapContainer from './components/MapContainer';
 import FilterModal from './components/FilterModal';
+import DataTable from './components/DataTable';
 
 import './App.css';
+
+const outerPushableStyle = {
+  overflow: 'hidden'
+};
 
 const pusherStyle = {
   height: '100%',
@@ -25,14 +30,19 @@ class App extends Component {
       <div className="App">
         <AppHeader />
         <div className="Content">
-          <Sidebar.Pushable>
-            <Sidebar animation="slide along" direction="right" width="very wide" visible={this.props.sidebarVisible} icon="labeled">
-              <AppSidebar />
+          <Sidebar.Pushable style={outerPushableStyle}>
+            <Sidebar animation="overlay" direction="bottom" width="very wide" visible={this.props.dataTableVisible} icon="labeled">
+              <DataTable />
             </Sidebar>
             <Sidebar.Pusher style={pusherStyle}>
-                
-                <MapContainer style={mapContainerStyle}/>
-                
+              <Sidebar.Pushable>
+                <Sidebar animation="slide along" direction="right" width="very wide" visible={this.props.sidebarVisible} icon="labeled">
+                  <AppSidebar />
+                </Sidebar>
+                <Sidebar.Pusher style={pusherStyle}>
+                    <MapContainer style={mapContainerStyle}/>
+                </Sidebar.Pusher>
+              </Sidebar.Pushable>
             </Sidebar.Pusher>
           </Sidebar.Pushable>
         </div>
@@ -44,7 +54,8 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    sidebarVisible: state.app.sidebarVisible
+    sidebarVisible: state.app.sidebarVisible,
+    dataTableVisible: state.app.dataTableVisible
   };
 }
 

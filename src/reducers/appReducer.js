@@ -1,7 +1,8 @@
-import { SIDEBAR_TOGGLE, FILTER_MODAL_SHOW, FILTER_MODAL_HIDE } from '../actions/appActions';
+import { SIDEBAR_TOGGLE, DATA_TABLE_TOGGLE, FILTER_MODAL_SHOW, FILTER_MODAL_HIDE } from '../actions/appActions';
 
 const defaultAppReducerState = {
     sidebarVisible: false,
+    dataTableVisible: false,
     filterModalVisible: false
 };
 
@@ -12,6 +13,12 @@ const appReducer = (state = defaultAppReducerState, action) => {
                 ...state,
                 sidebarVisible: !state.sidebarVisible
             };
+
+        case DATA_TABLE_TOGGLE:
+            return {
+                ...state,
+                dataTableVisible: !state.dataTableVisible
+            }
 
         case FILTER_MODAL_SHOW:
             return {

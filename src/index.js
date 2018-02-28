@@ -9,11 +9,13 @@ import 'semantic-ui-css/semantic.min.css';
 import './index.css';
 import App from './App';
 import store from './store';
+import { toggleDataTable } from './actions/appActions';
 
 loadCss('https://js.arcgis.com/4.6/esri/css/main.css');
 
 const cameraLayerButtonClick = () => {
-    alert('global 123');
+    // alert('global 123');
+    store.dispatch(toggleDataTable());
 };
 
 window.cameraLayerButtonClick = cameraLayerButtonClick;

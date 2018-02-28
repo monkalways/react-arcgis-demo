@@ -4,6 +4,7 @@ import { Button, Divider, Form, Item } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
 
 import { CAMERA_LAYER_ID, SCHOOL_LAYER_ID, NEIGHBORHOOD_LAYER_ID } from '../services/arcgisService';
+import { toggleDataTable } from '../actions/appActions';
 import { queryMapLayer, hideSearchResults } from '../actions/mapActions';
 import renderInput from './utils/renderInput';
 import renderSelect from './utils/renderSelect';
@@ -13,7 +14,7 @@ import NeighborhoodSearchResultItem from './NeighborhoodSearchResultItem';
 import { visibleLayersSelector } from '../selectors/mapSelector';
 
 const MapQuery = ({initialValues, pristine, reset, submitting, handleSubmit, queryMapLayer, searchResults, 
-  showSearchResults, hideSearchResults, layers}) => {
+  showSearchResults, hideSearchResults, layers, toggleDataTable, dataTableVisible}) => {
 
   const onSubmit = (values) => {
     queryMapLayer({
@@ -24,6 +25,10 @@ const MapQuery = ({initialValues, pristine, reset, submitting, handleSubmit, que
 
   const handleBackToSearch = () => {
     hideSearchResults();
+  };
+
+  const handleShowTable = () => {
+    toggleDataTable();
   };
 
   const renderSearchResultItem = () => {
@@ -59,6 +64,7 @@ const MapQuery = ({initialValues, pristine, reset, submitting, handleSubmit, que
         <div>
           <Button fluid onClick={handleBackToSearch}>Back to Search</Button>
           <Divider horizontal>Search Results</Divider>
+          <Button fluid onClick={handleShowTable}>{!dataTableVisible? 'Show Table' : 'Hide Table'}</Button>
           { searchResults && searchResults.length > 0 ? (
             <Item.Group>
               {renderSearchResultItem()}
@@ -77,6 +83,7 @@ const mapStateToProps = (state) => ({
   initialValues: state.map.queryForm,
   searchResults: state.map.searchResults,
   showSearchResults: state.map.showSearchResults,
+  dataTableVisible: state.app.dataTableVisible,
   layers: visibleLayersSelector(state).map(layer => ({
     value: layer.id,
     text: layer.title
@@ -103,4 +110,4 @@ const MapQueryReduxForm = reduxForm({
   enableReinitialize: true,
 })(MapQuery);
 
-export default connect(mapStateToProps, {queryMapLayer, hideSearchResults})(MapQueryReduxForm);
+export default connect(mapStateToProps, {queryMapLayer, hideSearchResults, toggleDataTable})(MapQueryReduxForm);

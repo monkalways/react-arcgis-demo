@@ -1,9 +1,14 @@
 export const SIDEBAR_TOGGLE = 'SIDEBAR_TOGGLE';
+export const DATA_TABLE_TOGGLE = 'DATA_TABLE_TOGGLE';
 export const FILTER_MODAL_SHOW = 'FILTER_MODAL_SHOW';
 export const FILTER_MODAL_HIDE = 'FILTER_MODAL_HIDE';
 
 export const toggleSidebar = () => ({
     type: SIDEBAR_TOGGLE
+});
+
+export const toggleDataTable = () => ({
+    type: DATA_TABLE_TOGGLE
 });
 
 export const showFilterModal = () => ({

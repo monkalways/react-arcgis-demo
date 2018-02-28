@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Menu, Popup } from 'semantic-ui-react';
 
-import { toggleSidebar } from '../actions/appActions';
+import { toggleSidebar, toggleDataTable } from '../actions/appActions';
 import { toggleLegend } from '../actions/mapActions';
 
 import logo from '../logo.svg';
 import './AppHeader.css';
 
-const AppHeader = ({toggleSidebar, toggleLegend}) => {
+const AppHeader = ({toggleSidebar, toggleDataTable, toggleLegend}) => {
     return (
         <Menu color="violet" inverted fixed="top">
             <Menu.Item>
@@ -19,6 +19,11 @@ const AppHeader = ({toggleSidebar, toggleLegend}) => {
             </Menu.Item>
 
             <Menu.Item position="right" fitted>
+                <Popup
+                    size="tiny"
+                    trigger={<Button icon="table" color="violet" onClick={(event, data) => toggleDataTable()}></Button>}
+                    content="Toggle table"
+                />
                 <Popup
                     size="tiny"
                     trigger={<Button icon="list layout" color="violet" onClick={(event, data) => toggleLegend()}></Button>}
@@ -35,4 +40,4 @@ const AppHeader = ({toggleSidebar, toggleLegend}) => {
     );
 }
 
-export default connect(null, {toggleSidebar, toggleLegend})(AppHeader);
+export default connect(null, {toggleSidebar, toggleDataTable, toggleLegend})(AppHeader);
