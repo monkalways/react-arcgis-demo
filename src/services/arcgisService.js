@@ -14,7 +14,7 @@ let legend = null;
 export const initializeArcGisMap = (mapValue, viewValue) => {
     map = mapValue;
     view = viewValue;
-    console.log(map);
+    
     // automatically closes the popup when the View camera or Viewpoint changes
     view.popup.autoCloseEnabled = true;
 
