@@ -7,7 +7,7 @@ import { changeBasemap } from '../actions/mapActions';
 
 const BasemapGallery = ({currentBasemap, changeBasemap}) => {
 
-    const getCardColor = (basemap) => basemap.title === currentBasemap ? 'violet' : '';
+    const getCardColor = (basemap) => basemap.title === currentBasemap ? 'violet' : 'black';
 
     return (
         <div>
