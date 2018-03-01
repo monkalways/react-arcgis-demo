@@ -1,3 +1,6 @@
+// export const webmapId = 'd1e4c1b77bab4e06b5a94a16f6079a70';
+export const webmapId = '30e4f5d973c14145acbc82b351166df4';
+
 export const basemaps = [
     {
         id: 'streets',
@@ -46,6 +49,6 @@ export const basemaps = [
     }
 ];
 
-export const CAMERA_LAYER_ID = 'Toronto_Cameras_6835';
-export const SCHOOL_LAYER_ID = 'Toronto_Schools_5846';
-export const NEIGHBORHOOD_LAYER_ID = 'Toronto_Neighbourhoods_2016_Crime_1374';
+export const CAMERA_LAYER_TITLE = 'Toronto Cameras';
+export const SCHOOL_LAYER_TITLE = 'Toronto Schools';
+export const NEIGHBORHOOD_LAYER_TITLE = 'Toronto_Neighbourhoods_2016_Crime';

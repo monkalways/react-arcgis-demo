@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { WebMap } from 'react-arcgis';
 
+import { webmapId } from '../constants';
 import { loadMap } from '../actions/mapActions';
 import { initializeArcGisMap } from '../services/arcgisService';
 
@@ -18,7 +19,7 @@ class MapContainer extends Component {
 
     render() {
         return (
-            <WebMap id="d1e4c1b77bab4e06b5a94a16f6079a70" onLoad={this.handleMapLoad} />
+            <WebMap id={webmapId} onLoad={this.handleMapLoad} onFail={e => console.log(e)} />
         );
     }
 }
