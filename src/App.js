@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Sidebar } from 'semantic-ui-react';
+import { Dimmer, Loader, Sidebar } from 'semantic-ui-react';
 
 import AppHeader from './components/AppHeader';
 import AppSidebar from './components/AppSidebar';
@@ -28,6 +28,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Dimmer active={!this.props.mapLoaded}>
+          <Loader size="large">Loading</Loader>
+        </Dimmer>
         <AppHeader />
         <div className="Content">
           <Sidebar.Pushable style={outerPushableStyle}>
@@ -55,7 +58,8 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     sidebarVisible: state.app.sidebarVisible,
-    dataTableVisible: state.app.dataTableVisible
+    dataTableVisible: state.app.dataTableVisible,
+    mapLoaded: !!state.map.basemap
   };
 }
 
