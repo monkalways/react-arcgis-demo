@@ -2,10 +2,7 @@ import { esriPromise } from 'react-arcgis';
 
 import store from '../store';
 import { completeQueryMapLayer } from '../actions/mapActions';
-
-export const CAMERA_LAYER_ID = 'Toronto_Cameras_6835';
-export const SCHOOL_LAYER_ID = 'Toronto_Schools_5846';
-export const NEIGHBORHOOD_LAYER_ID = 'Toronto_Neighbourhoods_2016_Crime_1374';
+import { CAMERA_LAYER_ID, NEIGHBORHOOD_LAYER_ID } from '../constants';
 
 let map = null;
 let view = null;
@@ -153,4 +150,12 @@ export const zoomToFeature = (feature, zoom) => {
             location: feature.geometry
         });
     });
+};
+
+export const getBasemap = () => {
+    return map.basemap.title;
 }
+
+export const changeBasemap = (basemap) => {
+    map.basemap = basemap;
+};

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Divider, Form, Item } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
 
-import { CAMERA_LAYER_ID, SCHOOL_LAYER_ID, NEIGHBORHOOD_LAYER_ID } from '../services/arcgisService';
+import { CAMERA_LAYER_ID, SCHOOL_LAYER_ID, NEIGHBORHOOD_LAYER_ID } from '../constants';
 import { toggleDataTable } from '../actions/appActions';
 import { queryMapLayer, hideSearchResults } from '../actions/mapActions';
 import renderInput from './utils/renderInput';

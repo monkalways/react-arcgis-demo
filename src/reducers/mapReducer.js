@@ -10,7 +10,8 @@ import {
     MAP_LAYER_QUERY,
     MAP_LAYER_QUERY_COMPLETE,
     SEARCH_RESULTS_HIDE,
-    FEATURE_ZOOM
+    FEATURE_ZOOM,
+    BASEMAP_CHANGE
 } from '../actions/mapActions';
 
 import {
@@ -19,7 +20,9 @@ import {
     toggleLegend,
     filterMapLayer,
     queryMapLayer,
-    zoomToFeature
+    zoomToFeature,
+    getBasemap,
+    changeBasemap
 } from '../services/arcgisService';
 
 const defaultMapReducerState = {
@@ -29,7 +32,8 @@ const defaultMapReducerState = {
     queryForm: null,
     searchResults: [],
     showSearchResults: false,
-    legendVisible: false
+    legendVisible: false,
+    basemap: null
 };
 
 const mapReducer = (state = defaultMapReducerState, action) => {
@@ -38,7 +42,8 @@ const mapReducer = (state = defaultMapReducerState, action) => {
         case MAP_LOAD:
             return {
                 ...state,
-                layers: buildLayers()
+                layers: buildLayers(),
+                basemap: getBasemap()
             };
 
         case LAYER_VISIBILITY_CHANGE:
@@ -113,6 +118,13 @@ const mapReducer = (state = defaultMapReducerState, action) => {
             zoomToFeature(action.feature, action.zoom);
             return {
                 ...state
+            };
+
+        case BASEMAP_CHANGE:
+            changeBasemap(action.basemap);
+            return {
+                ...state,
+                basemap: getBasemap()
             };
 
         default:
