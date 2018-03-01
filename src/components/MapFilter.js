@@ -13,7 +13,7 @@ const MapFilter = ({showFilterModal}) => {
 
     return (
         <div>
-            <Header>Filter</Header>
+            <Header>Filter List</Header>
             <Divider />
             <Button type="button" icon onClick={() => showFilterModal()}><Icon name='filter' />New Filter</Button>    
             <div style={filterListStyle}>
