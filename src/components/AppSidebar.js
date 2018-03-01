@@ -4,7 +4,7 @@ import { Segment, Tab } from 'semantic-ui-react';
 import LayerSelector from './LayerSelector';
 import MapFilter from './MapFilter';
 import MapQuery from './MapQuery';
-import BasemapList from './BasemapList';
+import BasemapGallery from './BasemapGallery';
 
 const panes = [
     { 
@@ -21,7 +21,7 @@ const panes = [
     },
     { 
         menuItem: { key: 'basemap', icon: 'block layout', content: 'Basemap'},
-        render: () => <Tab.Pane><BasemapList /></Tab.Pane> 
+        render: () => <Tab.Pane><BasemapGallery /></Tab.Pane> 
     }
 ]
 
