@@ -47,7 +47,7 @@ const mapReducer = (state = defaultMapReducerState, action) => {
             };
 
         case LAYER_VISIBILITY_CHANGE:
-            setLayerVisibility(action.layerId, action.visible);
+            setLayerVisibility(action.layerTitle, action.visible);
             return {
                 ...state,
                 layers: buildLayers()

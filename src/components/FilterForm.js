@@ -18,7 +18,7 @@ const FilterForm = ({
     const onSubmit = (values) => {
         addFilter({
             name: values.name,
-            layerId: values.layerId,
+            layerTitle: values.layerTitle,
             criteria: values.criteria
         });
         hideFilterModal();
@@ -27,7 +27,7 @@ const FilterForm = ({
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Field name="name" component={renderInput} label="Name" placeholder="Camera layer filter" />
-            <Field name="layerId" component={renderSelect} label="Layer" placeholder="Select a layer" options={layers} />
+            <Field name="layerTitle" component={renderSelect} label="Layer" placeholder="Select a layer" options={layers} />
             <Field name="criteria" component={renderInput} label="Criteria" placeholder="CameraNumber LIKE 'Camera800?'" />
             <Button type="submit" disabled={pristine  || submitting} primary>Save</Button>
         </Form>
@@ -41,8 +41,8 @@ const validate = (values) => {
         errors.name = 'Please select a filter name.';
     }
 
-    if(!values.layerId) {
-        errors.layerId = 'Please select a layer.';
+    if(!values.layerTitle) {
+        errors.layerTitle = 'Please select a layer.';
     }
 
     if(!values.criteria) {
@@ -61,7 +61,7 @@ const FilterFormReduxForm = reduxForm({
 const mapStateToProps = (state) => ({
     initialValues: state.map.filterForm,
     layers: visibleLayersSelector(state).map(layer => ({
-        value: layer.id,
+        value: layer.title,
         text: layer.title
       }))
 });

@@ -36,7 +36,7 @@ class FilterList extends Component {
                     <Form>
                         <Form.Field>
                             <label>Layer</label>
-                            <input value={filter.layerId} readOnly />
+                            <input value={filter.layerTitle} readOnly />
                         </Form.Field>
                         <Form.Field>
                             <label>Criteria</label>

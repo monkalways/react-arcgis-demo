@@ -44,7 +44,7 @@ const DataTable = ({searchResults, queryForm, toggleDataTable}) => {
             <Segment>
                 <Button icon="remove" size="tiny" floated="right" onClick={handleCloseButton}></Button>
                 <div>
-                    <Header as='h3'>{queryForm.layerId}</Header>
+                    <Header as='h3'>{queryForm.layerTitle}</Header>
                     <div style={tableContainerStyle}>
                         <Table celled>
                             <Table.Header>

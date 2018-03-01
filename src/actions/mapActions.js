@@ -14,9 +14,9 @@ export const loadMap = () => ({
     type: MAP_LOAD
 });
 
-export const changeLayerVisibility = (layerId, visible) => ({
+export const changeLayerVisibility = (layerTitle, visible) => ({
     type: LAYER_VISIBILITY_CHANGE,
-    layerId,
+    layerTitle,
     visible
 });
 

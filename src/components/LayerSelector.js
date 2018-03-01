@@ -15,11 +15,11 @@ const LayerSelector = ({layers, changeLayerVisibility}) => {
         return (
             <div>
                 {layers.map(layer => (
-                    <Form.Field key={layer.id} >
+                    <Form.Field key={layer.title} >
                         <Checkbox 
                             label={layer.title} 
                             checked={layer.visible} 
-                            onChange={(event, data) => changeLayerVisibility(layer.id, data.checked)} />
+                            onChange={(event, data) => changeLayerVisibility(layer.title, data.checked)} />
                     </Form.Field>
                 ))}
             </div>

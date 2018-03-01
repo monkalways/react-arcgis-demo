@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Divider, Form, Header, Item } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
 
-import { CAMERA_LAYER_ID, SCHOOL_LAYER_ID, NEIGHBORHOOD_LAYER_ID } from '../constants';
+import { CAMERA_LAYER_TITLE, SCHOOL_LAYER_TITLE, NEIGHBORHOOD_LAYER_TITLE } from '../constants';
 import { toggleDataTable } from '../actions/appActions';
 import { queryMapLayer, hideSearchResults } from '../actions/mapActions';
 import renderInput from './utils/renderInput';
@@ -18,7 +18,7 @@ const MapQuery = ({initialValues, pristine, reset, submitting, handleSubmit, que
 
   const onSubmit = (values) => {
     queryMapLayer({
-      layerId: values.layerId,
+      layerTitle: values.layerTitle,
       criteria: values.criteria
     });
   };
@@ -32,16 +32,16 @@ const MapQuery = ({initialValues, pristine, reset, submitting, handleSubmit, que
   };
 
   const renderSearchResultItem = () => {
-    switch (initialValues.layerId) {
-      case CAMERA_LAYER_ID:
+    switch (initialValues.layerTitle) {
+      case CAMERA_LAYER_TITLE:
         return searchResults.map(feature => (
           <CameraSearchResultItem key={feature.uid} feature={feature}></CameraSearchResultItem>
         ));
-      case SCHOOL_LAYER_ID:
+      case SCHOOL_LAYER_TITLE:
         return searchResults.map(feature => (
           <SchoolSearchResultItem key={feature.uid} feature={feature}></SchoolSearchResultItem>
         ));
-      case NEIGHBORHOOD_LAYER_ID:
+      case NEIGHBORHOOD_LAYER_TITLE:
         return searchResults.map(feature => (
           <NeighborhoodSearchResultItem key={feature.uid} feature={feature}></NeighborhoodSearchResultItem>
         ));
@@ -58,7 +58,7 @@ const MapQuery = ({initialValues, pristine, reset, submitting, handleSubmit, que
       <Divider />
       { !showSearchResults ? (
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Field name="layerId" component={renderSelect} label="Layer" placeholder="Select a layer" options={layers} />
+          <Field name="layerTitle" component={renderSelect} label="Layer" placeholder="Select a layer" options={layers} />
           <Field name='criteria' component={renderInput} label="Query" placeholder="CameraNumber LIKE 'Camera800%'" />
           <Button type='submit' disabled={pristine  || submitting} primary>Submit</Button>
         </Form>
@@ -87,7 +87,7 @@ const mapStateToProps = (state) => ({
   showSearchResults: state.map.showSearchResults,
   dataTableVisible: state.app.dataTableVisible,
   layers: visibleLayersSelector(state).map(layer => ({
-    value: layer.id,
+    value: layer.title,
     text: layer.title
   }))
 });
@@ -95,8 +95,8 @@ const mapStateToProps = (state) => ({
 const validate = (formProps) => {
   const errors = {};
 
-  if (!formProps.layerId) {
-    errors.layerId = 'Please select a layer.';
+  if (!formProps.layerTitle) {
+    errors.layerTitle = 'Please select a layer.';
   }
 
   if (!formProps.criteria) {

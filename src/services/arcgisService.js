@@ -2,7 +2,7 @@ import { esriPromise } from 'react-arcgis';
 
 import store from '../store';
 import { completeQueryMapLayer } from '../actions/mapActions';
-import { CAMERA_LAYER_ID, NEIGHBORHOOD_LAYER_ID } from '../constants';
+import { CAMERA_LAYER_TITLE, NEIGHBORHOOD_LAYER_TITLE } from '../constants';
 
 let map = null;
 let view = null;
@@ -20,7 +20,7 @@ export const initializeArcGisMap = (mapValue, viewValue) => {
 };
 
 const setupCameraLayerPopupTemplate = () => {
-  const cameraLayer = map.layers.items.find(item => item.id === CAMERA_LAYER_ID);
+  const cameraLayer = map.layers.items.find(item => item.title === CAMERA_LAYER_TITLE);
   cameraLayer.popupTemplate = {
       title: '#{CameraNumber}',
       content: `
@@ -51,7 +51,6 @@ export const buildLayers = () => {
   const layers = [];
   map.layers.items.forEach(item => {
       layers.push({
-          id: item.id,
           title: item.title,
           visible: item.visible
       });
@@ -59,8 +58,8 @@ export const buildLayers = () => {
   return layers;
 };
 
-export const setLayerVisibility = (layerId, visible) => {
-  const layer = map.layers.items.find(item => item.id === layerId);
+export const setLayerVisibility = (layerTitle, visible) => {
+  const layer = map.layers.items.find(item => item.title === layerTitle);
   layer.visible = visible;
 };
 
@@ -94,7 +93,7 @@ export const toggleLegend = (legendVisible) => {
 };
 
 export const filterMapLayer = (filter) => {
-  const layer = map.layers.items.find(item => item.id === filter.layerId);
+  const layer = map.layers.items.find(item => item.title === filter.layerTitle);
   if(!filter.active || !filter.criteria) {
       layer.definitionExpression = null;
   } else {
@@ -104,7 +103,7 @@ export const filterMapLayer = (filter) => {
 };
 
 export const queryMapLayer = (queryForm) => {
-  const layer = map.layers.items.find(item => item.id === queryForm.layerId);
+  const layer = map.layers.items.find(item => item.title === queryForm.layerTitle);
   const queryObj = layer.createQuery();
   queryObj.where = queryForm.criteria;
   layer.queryFeatures(queryObj).then(result => {
@@ -113,7 +112,7 @@ export const queryMapLayer = (queryForm) => {
         // zoom to first feature returned
         const feature = result.features[0];
         let zoom = 15;
-        if (queryForm.layerId === NEIGHBORHOOD_LAYER_ID) {
+        if (queryForm.layerTitle === NEIGHBORHOOD_LAYER_TITLE) {
            zoom = 13;
         }
 
