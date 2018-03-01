@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Icon } from 'semantic-ui-react';
+import { Button, Divider, Header, Icon } from 'semantic-ui-react';
 
 import { showFilterModal } from '../actions/appActions';
 import FilterList from './FilterList';
@@ -13,6 +13,8 @@ const MapFilter = ({showFilterModal}) => {
 
     return (
         <div>
+            <Header>Filter</Header>
+            <Divider />
             <Button type="button" icon onClick={() => showFilterModal()}><Icon name='filter' />New Filter</Button>    
             <div style={filterListStyle}>
                 <FilterList />

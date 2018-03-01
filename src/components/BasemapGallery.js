@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Card, Header, Image } from 'semantic-ui-react';
+import { Card, Divider, Header, Image } from 'semantic-ui-react';
 
 import { basemaps } from '../constants';
 import { changeBasemap } from '../actions/mapActions';
@@ -12,6 +12,7 @@ const BasemapGallery = ({currentBasemap, changeBasemap}) => {
     return (
         <div>
             <Header>Basemap Gallery</Header>
+            <Divider />
             <Card.Group itemsPerRow={3}>
                 {basemaps.map(basemap => (
                     <Card key={basemap.id} color={getCardColor(basemap)} onClick={() => changeBasemap(basemap.id)}>

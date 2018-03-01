@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Divider, Form, Item } from 'semantic-ui-react';
+import { Button, Divider, Form, Header, Item } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
 
 import { CAMERA_LAYER_ID, SCHOOL_LAYER_ID, NEIGHBORHOOD_LAYER_ID } from '../constants';
@@ -54,6 +54,8 @@ const MapQuery = ({initialValues, pristine, reset, submitting, handleSubmit, que
 
   return (
     <div>
+      <Header>Query</Header>
+      <Divider />
       { !showSearchResults ? (
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Field name="layerId" component={renderSelect} label="Layer" placeholder="Select a layer" options={layers} />
