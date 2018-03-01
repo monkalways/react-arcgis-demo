@@ -6,7 +6,7 @@ import { Button, Header, Segment, Table } from 'semantic-ui-react';
 import { toggleDataTable } from '../actions/appActions';
 
 const containerStyle = {
-    height: 400
+    height: 500
 };
 
 const tableContainerStyle = {
