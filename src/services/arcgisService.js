@@ -17,6 +17,28 @@ export const initializeArcGisMap = (mapValue, viewValue) => {
 
     setupCameraLayerPopupTemplate();
     // setupZoomEventHandler();
+    setupMapViewWidgets();
+};
+
+const setupMapViewWidgets = () => {
+    esriPromise(['esri/widgets/BasemapToggle', 'esri/widgets/ScaleBar', 'esri/widgets/Compass']).then(([ BasemapToggle, ScaleBar, Compass ]) => {
+        var toggle = new BasemapToggle({
+            view: view,
+            nextBasemap: 'satellite'
+        });
+        view.ui.add(toggle, "bottom-right");
+
+        var scaleBar = new ScaleBar({
+            view: view
+        });
+        view.ui.add(scaleBar, "bottom-left");
+
+        var compass = new Compass({
+            view: view
+        });
+        view.ui.add(compass, "top-left");
+
+    }).catch((err) => console.error(err));
 };
 
 const setupCameraLayerPopupTemplate = () => {
