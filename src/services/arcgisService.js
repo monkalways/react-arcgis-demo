@@ -11,13 +11,15 @@ let legend = null;
 export const initializeArcGisMap = (mapValue, viewValue) => {
     map = mapValue;
     view = viewValue;
+
+    setupMapViewWidgets();
+    setupViewPopupTriggerActions();
+    // setupZoomEventHandler();
     
     // automatically closes the popup when the View camera or Viewpoint changes
     view.popup.autoCloseEnabled = true;
 
     setupCameraLayerPopupTemplate();
-    // setupZoomEventHandler();
-    setupMapViewWidgets();
 };
 
 const setupMapViewWidgets = () => {
@@ -41,6 +43,17 @@ const setupMapViewWidgets = () => {
     }).catch((err) => console.error(err));
 };
 
+const setupViewPopupTriggerActions = () => {
+    view.popup.viewModel.on('trigger-action', ({ action }) => {
+        console.log(action);
+        if(action.id === 'camera-details') {
+            const attributes = view.popup.viewModel.selectedFeature.attributes;
+            const northReferenceStaticImage = attributes.NorthReferenceStaticImage;
+            window.open(northReferenceStaticImage);
+        }
+    });
+}
+
 const setupCameraLayerPopupTemplate = () => {
   const cameraLayer = map.layers.items.find(item => item.title === CAMERA_LAYER_TITLE);
   cameraLayer.popupTemplate = {
@@ -56,7 +69,12 @@ const setupCameraLayerPopupTemplate = () => {
                 <div class="content">South View</div>
             </div>
             <button type="button" class="ui button" onclick="window.cameraLayerButtonClick()">Click Me</button>
-        </div>`
+        </div>`,
+        actions: [{
+            id: 'camera-details',
+            className: 'esri-icon-applications',
+            title: 'Details'
+        }]
   };
 };
 
